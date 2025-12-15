@@ -7,7 +7,7 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const app = express(); // << THIS WAS MISSING
+const app = express();
 
 // Middleware
 app.use(cors());
@@ -23,9 +23,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/ai", aiRoutes);
 app.use("/api/tasks", taskRoutes);
 
-
-
-// Root route
+// Root route (for testing)
 app.get("/", (req, res) => {
   res.send("AI Productivity Hub Backend Running");
 });
@@ -38,8 +36,8 @@ mongoose
     console.error("❌ DB connection error:", err.message)
   );
 
-// Start server
-const PORT = 5000;
+// Start server (Render-safe)
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
