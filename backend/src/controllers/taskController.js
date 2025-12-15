@@ -1,8 +1,8 @@
 // backend/src/controllers/taskController.js
+
 const Task = require("../models/Task");
 
-
-// GET /api/tasks  - get all tasks for logged-in user
+// GET /api/tasks - get all tasks for logged-in user
 const getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({ userId: req.user.userId }).sort({
@@ -15,7 +15,7 @@ const getTasks = async (req, res) => {
   }
 };
 
-// POST /api/tasks  - create new task
+// POST /api/tasks - create new task
 const createTask = async (req, res) => {
   try {
     const { title, description, priority, dueDate } = req.body;
@@ -39,7 +39,7 @@ const createTask = async (req, res) => {
   }
 };
 
-// PUT /api/tasks/:id  - update existing task
+// PUT /api/tasks/:id - update existing task
 const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
@@ -56,7 +56,8 @@ const updateTask = async (req, res) => {
     }
 
     if (dueDate !== undefined) {
-    updateData.dueDate = dueDate || null;
+      updateData.dueDate = dueDate || null;
+    }
 
     const task = await Task.findOneAndUpdate(
       { _id: id, userId: req.user.userId },
