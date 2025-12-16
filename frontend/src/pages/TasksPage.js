@@ -300,7 +300,7 @@ const TasksPage = () => {
   };
 
   return (
-    <div className="tasks-container">
+      <div className="tasks-container">
       <h2 className="tasks-title">My Tasks</h2>
 
       {/* 📊 Summary bar */}

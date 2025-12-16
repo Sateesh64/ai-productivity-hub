@@ -850,3 +850,92 @@ body {
   }
 }
 
+/* =============================
+   Global Page Backgrounds
+============================= */
+
+.page-bg {
+  min-height: calc(100vh - 60px);
+  padding: 24px;
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+}
+
+.app.dark .page-bg {
+  background: linear-gradient(135deg, #020617, #0f172a);
+}
+
+/* Card-style containers */
+.card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.app.dark .card {
+  background: #0f172a;
+  border: 1px solid #1f2937;
+}
+
+/* =============================
+   Mobile Responsiveness
+============================= */
+
+@media (max-width: 768px) {
+  .page-bg {
+    padding: 14px;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .tasks-title {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  /* Summary cards stack */
+  .tasks-summary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  /* Search + filter row */
+  .tasks-container > div[style] {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  /* Filter buttons full width */
+  .tasks-btn-primary {
+    width: 100%;
+  }
+
+  /* Quick filter chips wrap */
+  .tasks-quick-filters {
+    flex-wrap: wrap;
+  }
+
+  .tasks-chip {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Task card */
+  .task-item {
+    flex-direction: column;
+  }
+
+  .task-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .btn-small {
+    flex: 1;
+  }
+}
