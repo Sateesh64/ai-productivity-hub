@@ -6,6 +6,17 @@ This project is built to demonstrate real-world frontend and backend development
 
 ---
 
+# AI Productivity Hub
+## 🔗 Live Demo
+Frontend: https://shimmering-profiterole-194264.netlify.app  
+
+🔗 **Live Backend URL**:  
+https://ai-productivity-hub-x7c9.onrender.com
+
+📦 **GitHub Repository**:  
+https://github.com/Sateesh64/ai-productivity-hub
+
+
 ## 🚀 Features
 
 ### ✅ Task Management
