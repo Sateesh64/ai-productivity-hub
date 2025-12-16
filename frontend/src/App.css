@@ -667,3 +667,186 @@ nav a:hover {
   border-color: #1d4ed8;
   color: #f9fafb;
 }
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+.tasks-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.tasks-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* Task card */
+.task-item {
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* Summary bar */
+.tasks-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.tasks-summary-item {
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+}
+
+.tasks-summary-label {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.tasks-summary-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.auth-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.auth-box {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.auth-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+
+.app.dark {
+  background: linear-gradient(135deg, #020617, #020617);
+}
+
+.app.dark .tasks-container,
+.app.dark .chat-box,
+.app.dark .auth-box {
+  background: #020617;
+  color: #e5e7eb;
+}
+
+/* ============================= */
+/* 📱 Mobile Responsive Styles */
+/* ============================= */
+@media (max-width: 768px) {
+  /* Global spacing */
+  .tasks-container,
+  .chat-box,
+  .auth-box {
+    margin: 16px;
+    padding: 16px;
+  }
+
+  /* Titles */
+  .tasks-title,
+  .auth-title {
+    font-size: 22px;
+  }
+
+  /* Summary cards stack */
+  .tasks-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Search + filter row */
+  .tasks-container > div[style*="flex"] {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Filter buttons full width */
+  .tasks-btn-primary {
+    width: 100%;
+  }
+
+  /* Quick filter chips wrap */
+  .tasks-quick-filters {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tasks-chip {
+    flex: 1;
+    text-align: center;
+  }
+
+  /* Task card layout */
+  .task-item {
+    padding: 14px;
+  }
+
+  .task-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Pagination buttons */
+  .tasks-pagination {
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+  }
+
+  .page-btn {
+    min-width: 40px;
+  }
+
+  /* Chat textarea */
+  .chat-textarea {
+    min-height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tasks-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .tasks-title {
+    font-size: 20px;
+  }
+
+  .tasks-btn-primary {
+    font-size: 14px;
+  }
+}
+
