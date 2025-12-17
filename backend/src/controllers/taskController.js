@@ -1,11 +1,9 @@
-// backend/src/controllers/taskController.js
-
 const Task = require("../models/Task");
 
-// GET /api/tasks - get all tasks for logged-in user
+// GET /api/tasks
 const getTasks = async (req, res) => {
   try {
-    const tasks = await Task.find({ userId: req.user.userId }).sort({
+    const tasks = await Task.find({ user: req.user.id }).sort({
       createdAt: -1,
     });
     res.json(tasks);
@@ -15,7 +13,7 @@ const getTasks = async (req, res) => {
   }
 };
 
-// POST /api/tasks - create new task
+// POST /api/tasks
 const createTask = async (req, res) => {
   try {
     const { title, description, priority, dueDate } = req.body;
@@ -25,7 +23,7 @@ const createTask = async (req, res) => {
     }
 
     const task = await Task.create({
-      userId: req.user.userId,
+      user: req.user.id, // ✅ ONLY THIS
       title,
       description,
       priority: priority || "medium",
@@ -39,29 +37,21 @@ const createTask = async (req, res) => {
   }
 };
 
-// PUT /api/tasks/:id - update existing task
+// PUT /api/tasks/:id
 const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description, completed, priority, dueDate } = req.body;
 
-    const updateData = {
-      title,
-      description,
-      completed,
-    };
-
-    if (priority) {
-      updateData.priority = priority;
-    }
-
-    if (dueDate !== undefined) {
-      updateData.dueDate = dueDate || null;
-    }
-
     const task = await Task.findOneAndUpdate(
-      { _id: id, userId: req.user.userId },
-      updateData,
+      { _id: id, user: req.user.id }, // ✅ secure
+      {
+        title,
+        description,
+        completed,
+        priority,
+        dueDate: dueDate || null,
+      },
       { new: true }
     );
 
@@ -76,14 +66,14 @@ const updateTask = async (req, res) => {
   }
 };
 
-// DELETE /api/tasks/:id - delete task
+// DELETE /api/tasks/:id
 const deleteTask = async (req, res) => {
   try {
     const { id } = req.params;
 
     const task = await Task.findOneAndDelete({
       _id: id,
-      userId: req.user.userId,
+      user: req.user.id, // ✅ secure
     });
 
     if (!task) {
