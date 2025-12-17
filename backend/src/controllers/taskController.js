@@ -1,6 +1,6 @@
 const Task = require("../models/Task");
 
-// GET tasks (only logged-in user's tasks)
+// GET /api/tasks
 const getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({ user: req.user.id }).sort({
@@ -13,7 +13,7 @@ const getTasks = async (req, res) => {
   }
 };
 
-// CREATE task
+// POST /api/tasks
 const createTask = async (req, res) => {
   try {
     const { title, description, priority, dueDate } = req.body;
@@ -23,7 +23,7 @@ const createTask = async (req, res) => {
     }
 
     const task = await Task.create({
-      user: req.user.id,     // ✅ correct
+      user: req.user.id, // ✅ ONLY THIS
       title,
       description,
       priority: priority || "medium",
@@ -37,7 +37,7 @@ const createTask = async (req, res) => {
   }
 };
 
-// UPDATE task
+// PUT /api/tasks/:id
 const updateTask = async (req, res) => {
   try {
     const task = await Task.findOneAndUpdate(
@@ -57,7 +57,7 @@ const updateTask = async (req, res) => {
   }
 };
 
-// DELETE task
+// DELETE /api/tasks/:id
 const deleteTask = async (req, res) => {
   try {
     const task = await Task.findOneAndDelete({
