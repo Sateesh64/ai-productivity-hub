@@ -1,6 +1,6 @@
 const Task = require("../models/Task");
 
-// GET /api/tasks
+// GET /api/tasks - get all tasks for logged-in user
 const getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({ user: req.user.id }).sort({
@@ -13,7 +13,7 @@ const getTasks = async (req, res) => {
   }
 };
 
-// POST /api/tasks
+// POST /api/tasks - create new task
 const createTask = async (req, res) => {
   try {
     const { title, description, priority, dueDate } = req.body;
@@ -23,11 +23,11 @@ const createTask = async (req, res) => {
     }
 
     const task = await Task.create({
-      user: req.user.id, // ✅ ONLY THIS
-      title,
+      title: title.trim(),
       description,
       priority: priority || "medium",
       dueDate: dueDate || null,
+      user: req.user.id, // ✅ correct user binding
     });
 
     res.status(201).json(task);
@@ -37,21 +37,23 @@ const createTask = async (req, res) => {
   }
 };
 
-// PUT /api/tasks/:id
+// PUT /api/tasks/:id - update existing task
 const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description, completed, priority, dueDate } = req.body;
 
+    const updateData = {
+      title,
+      description,
+      completed,
+      priority,
+      dueDate: dueDate || null,
+    };
+
     const task = await Task.findOneAndUpdate(
-      { _id: id, user: req.user.id }, // ✅ secure
-      {
-        title,
-        description,
-        completed,
-        priority,
-        dueDate: dueDate || null,
-      },
+      { _id: id, user: req.user.id }, // ✅ user-safe update
+      updateData,
       { new: true }
     );
 
@@ -66,14 +68,14 @@ const updateTask = async (req, res) => {
   }
 };
 
-// DELETE /api/tasks/:id
+// DELETE /api/tasks/:id - delete task
 const deleteTask = async (req, res) => {
   try {
     const { id } = req.params;
 
     const task = await Task.findOneAndDelete({
       _id: id,
-      user: req.user.id, // ✅ secure
+      user: req.user.id, // ✅ user-safe delete
     });
 
     if (!task) {
@@ -93,3 +95,4 @@ module.exports = {
   updateTask,
   deleteTask,
 };
+
