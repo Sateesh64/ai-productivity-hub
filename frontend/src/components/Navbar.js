@@ -1,9 +1,20 @@
 // frontend/src/components/Navbar.js
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = ({ darkMode, onToggleDarkMode }) => {
+  const navigate = useNavigate();
+
+  // ✅ check login
+  const isLoggedIn = !!localStorage.getItem("token");
+
+  // ✅ logout handler
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
     <nav
       style={{
@@ -30,13 +41,33 @@ const Navbar = ({ darkMode, onToggleDarkMode }) => {
           Tasks
         </Link>
 
-        <Link style={{ color: "#fff" }} to="/login">
-          Login
-        </Link>
+        {!isLoggedIn && (
+          <>
+            <Link style={{ color: "#fff" }} to="/login">
+              Login
+            </Link>
 
-        <Link style={{ color: "#fff" }} to="/register">
-          Register
-        </Link>
+            <Link style={{ color: "#fff" }} to="/register">
+              Register
+            </Link>
+          </>
+        )}
+
+        {isLoggedIn && (
+          <button
+            onClick={handleLogout}
+            style={{
+              background: "transparent",
+              border: "1px solid #ef4444",
+              color: "#ef4444",
+              padding: "4px 10px",
+              borderRadius: "6px",
+              cursor: "pointer",
+            }}
+          >
+            Logout
+          </button>
+        )}
       </div>
 
       {/* RIGHT SIDE — DARK MODE TOGGLE */}
