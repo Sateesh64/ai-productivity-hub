@@ -19,6 +19,24 @@ https://github.com/Sateesh64/ai-productivity-hub
 
 ## 🚀 Features
 
+## 📸 Screenshots
+
+### 📝 Tasks Page
+## 📸 Screenshots
+
+### 📝 Tasks Page
+![Tasks Page](frontend/screenshots/tasks.png.png)
+
+### 🔐 Login Page
+![Login Page](frontend/screenshots/login.png.png)
+
+### 🧾 Register Page
+![Register Page](frontend/screenshots/register.png.png)
+
+### 💬 Chat Page
+![Chat Page](frontend/screenshots/chat.png.png)
+
+
 ### ✅ Task Management
 - Create, update, and delete tasks
 - Mark tasks as completed or pending
