@@ -1,68 +1,55 @@
-// backend/src/routes/taskRoutes.js
 const express = require("express");
 const router = express.Router();
-const Task = require("../models/Task"); // <-- uses Task.js we just updated
+const Task = require("../models/Task");
+const auth = require("../middleware/auth");
 
-// ------------------------------------------------------------------
-// CREATE TASK  (POST /api/tasks)
-// ------------------------------------------------------------------
-router.post("/", async (req, res) => {
+/* --------------------------------------------------
+   CREATE TASK
+-------------------------------------------------- */
+router.post("/", auth, async (req, res) => {
   try {
     const { title, description, priority, dueDate, completed } = req.body;
 
     const task = new Task({
+      user: req.user.id, // ✅ REQUIRED FIX
       title,
       description,
       priority: priority || "medium",
       completed: completed ?? false,
-      // store dueDate if provided (string "YYYY-MM-DD" from <input type="date" />)
       dueDate: dueDate ? new Date(dueDate) : null,
-      // if you have user auth, you can also set: user: req.userId
     });
 
     await task.save();
-    return res.status(201).json(task);
+    res.status(201).json(task);
   } catch (err) {
     console.error("Error creating task:", err);
-    return res
-      .status(500)
-      .json({ error: "Error creating task", details: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
-// ------------------------------------------------------------------
-// GET ALL TASKS  (GET /api/tasks)
-// ------------------------------------------------------------------
-router.get("/", async (req, res) => {
+/* --------------------------------------------------
+   GET TASKS (USER-SPECIFIC)
+-------------------------------------------------- */
+router.get("/", auth, async (req, res) => {
   try {
-    // if you have per-user tasks, filter with { user: req.userId }
-    const tasks = await Task.find().sort({ createdAt: -1 });
-    return res.json(tasks);
+    const tasks = await Task.find({ user: req.user.id }).sort({
+      createdAt: -1,
+    });
+    res.json(tasks);
   } catch (err) {
     console.error("Error fetching tasks:", err);
-    return res
-      .status(500)
-      .json({ error: "Error loading tasks", details: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
-// ------------------------------------------------------------------
-// UPDATE TASK  (PUT /api/tasks/:id)
-// ------------------------------------------------------------------
-router.put("/:id", async (req, res) => {
+/* --------------------------------------------------
+   UPDATE TASK
+-------------------------------------------------- */
+router.put("/:id", auth, async (req, res) => {
   try {
-    const { title, description, priority, completed, dueDate } = req.body;
-
-    const updated = await Task.findByIdAndUpdate(
-      req.params.id,
-      {
-        title,
-        description,
-        priority,
-        completed,
-        // update dueDate (allow clearing by sending null / empty string)
-        dueDate: dueDate ? new Date(dueDate) : null,
-      },
+    const updated = await Task.findOneAndUpdate(
+      { _id: req.params.id, user: req.user.id },
+      req.body,
       { new: true }
     );
 
@@ -70,32 +57,31 @@ router.put("/:id", async (req, res) => {
       return res.status(404).json({ error: "Task not found" });
     }
 
-    return res.json(updated);
+    res.json(updated);
   } catch (err) {
     console.error("Error updating task:", err);
-    return res
-      .status(500)
-      .json({ error: "Error updating task", details: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
-// ------------------------------------------------------------------
-// DELETE TASK  (DELETE /api/tasks/:id)
-// ------------------------------------------------------------------
-router.delete("/:id", async (req, res) => {
+/* --------------------------------------------------
+   DELETE TASK
+-------------------------------------------------- */
+router.delete("/:id", auth, async (req, res) => {
   try {
-    const deleted = await Task.findByIdAndDelete(req.params.id);
+    const deleted = await Task.findOneAndDelete({
+      _id: req.params.id,
+      user: req.user.id,
+    });
 
     if (!deleted) {
       return res.status(404).json({ error: "Task not found" });
     }
 
-    return res.json({ message: "Task deleted" });
+    res.json({ message: "Task deleted" });
   } catch (err) {
     console.error("Error deleting task:", err);
-    return res
-      .status(500)
-      .json({ error: "Error deleting task", details: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
