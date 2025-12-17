@@ -21,20 +21,18 @@ https://github.com/Sateesh64/ai-productivity-hub
 
 ## 📸 Screenshots
 
-### 📝 Tasks Page
-## 📸 Screenshots
+### Tasks Page
+![Tasks Page](frontend/screenshots/tasks.png)
 
-### 📝 Tasks Page
-![Tasks Page](frontend/screenshots/tasks.png.png)
+### Chat Page
+![Chat Page](frontend/screenshots/chat.png)
 
-### 🔐 Login Page
-![Login Page](frontend/screenshots/login.png.png)
+### Login Page
+![Login Page](frontend/screenshots/login.png)
 
-### 🧾 Register Page
-![Register Page](frontend/screenshots/register.png.png)
+### Register Page
+![Register Page](frontend/screenshots/register.png)
 
-### 💬 Chat Page
-![Chat Page](frontend/screenshots/chat.png.png)
 
 
 ### ✅ Task Management
