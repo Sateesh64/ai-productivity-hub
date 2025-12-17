@@ -1,6 +1,6 @@
 const Task = require("../models/Task");
 
-// GET /api/tasks - get all tasks for logged-in user
+// GET tasks (only logged-in user's tasks)
 const getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({ user: req.user.id }).sort({
@@ -8,12 +8,12 @@ const getTasks = async (req, res) => {
     });
     res.json(tasks);
   } catch (err) {
-    console.error("Get tasks error:", err.message);
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };
 
-// POST /api/tasks - create new task
+// CREATE task
 const createTask = async (req, res) => {
   try {
     const { title, description, priority, dueDate } = req.body;
@@ -23,37 +23,26 @@ const createTask = async (req, res) => {
     }
 
     const task = await Task.create({
-      title: title.trim(),
+      user: req.user.id,     // ✅ correct
+      title,
       description,
       priority: priority || "medium",
       dueDate: dueDate || null,
-      user: req.user.id, // ✅ correct user binding
     });
 
     res.status(201).json(task);
   } catch (err) {
-    console.error("Create task error:", err.message);
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };
 
-// PUT /api/tasks/:id - update existing task
+// UPDATE task
 const updateTask = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { title, description, completed, priority, dueDate } = req.body;
-
-    const updateData = {
-      title,
-      description,
-      completed,
-      priority,
-      dueDate: dueDate || null,
-    };
-
     const task = await Task.findOneAndUpdate(
-      { _id: id, user: req.user.id }, // ✅ user-safe update
-      updateData,
+      { _id: req.params.id, user: req.user.id },
+      req.body,
       { new: true }
     );
 
@@ -63,19 +52,17 @@ const updateTask = async (req, res) => {
 
     res.json(task);
   } catch (err) {
-    console.error("Update task error:", err.message);
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };
 
-// DELETE /api/tasks/:id - delete task
+// DELETE task
 const deleteTask = async (req, res) => {
   try {
-    const { id } = req.params;
-
     const task = await Task.findOneAndDelete({
-      _id: id,
-      user: req.user.id, // ✅ user-safe delete
+      _id: req.params.id,
+      user: req.user.id,
     });
 
     if (!task) {
@@ -84,7 +71,7 @@ const deleteTask = async (req, res) => {
 
     res.json({ message: "Task deleted" });
   } catch (err) {
-    console.error("Delete task error:", err.message);
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -95,4 +82,3 @@ module.exports = {
   updateTask,
   deleteTask,
 };
-
