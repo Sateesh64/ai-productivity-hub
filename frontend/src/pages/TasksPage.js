@@ -119,23 +119,40 @@ const TasksPage = () => {
 
   // Create Task
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const res = await API.post("/tasks", form);
-      setTasks((prev) => [res.data, ...prev]);
+  // basic validation
+  if (!form.title.trim() || !form.description.trim()) {
+    alert("Title and Description are required");
+    return;
+  }
 
-      setForm({
-        title: "",
-        description: "",
-        priority: "medium",
-        dueDate: "",
-      });
-      setCurrentPage(1); // show new task on first page
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  try {
+    const res = await API.post("/tasks", form);
+
+    // IMPORTANT FIX: backend response handling
+    const newTask = res.data.task || res.data;
+
+    setTasks((prev) => [newTask, ...prev]);
+
+    // reset form
+    setForm({
+      title: "",
+      description: "",
+      priority: "medium",
+      dueDate: "",
+    });
+
+    // go back to first page so new task is visible
+    setCurrentPage(1);
+  } catch (err) {
+    console.error(
+      "Create task failed:",
+      err.response?.data || err.message
+    );
+  }
+};
+
 
   // Toggle Complete
   const handleToggleComplete = async (task) => {
