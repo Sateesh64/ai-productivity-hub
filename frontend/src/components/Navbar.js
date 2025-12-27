@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = ({ darkMode, onToggleDarkMode }) => {
@@ -12,6 +12,15 @@ const Navbar = ({ darkMode, onToggleDarkMode }) => {
     localStorage.removeItem("token");
     navigate("/login");
   };
+
+  // ✅ APPLY DARK MODE TO BODY (KEY FIX)
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [darkMode]);
 
   return (
     <nav
@@ -31,21 +40,24 @@ const Navbar = ({ darkMode, onToggleDarkMode }) => {
           AI Productivity Hub
         </span>
 
-        <Link style={{ color: "#fff" }} to="/chat">
+        <Link style={{ color: "#fff", textDecoration: "none" }} to="/chat">
           Chat
         </Link>
 
-        <Link style={{ color: "#fff" }} to="/tasks">
+        <Link style={{ color: "#fff", textDecoration: "none" }} to="/tasks">
           Tasks
         </Link>
 
         {!isLoggedIn && (
           <>
-            <Link style={{ color: "#fff" }} to="/login">
+            <Link style={{ color: "#fff", textDecoration: "none" }} to="/login">
               Login
             </Link>
 
-            <Link style={{ color: "#fff" }} to="/register">
+            <Link
+              style={{ color: "#fff", textDecoration: "none" }}
+              to="/register"
+            >
               Register
             </Link>
           </>

@@ -939,3 +939,204 @@ body {
     flex: 1;
   }
 }
+
+/* ================= LOGIN PAGE STYLES ================= */
+.login-page { 
+  height: 70vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+}
+
+.login-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  border-radius: 12px;
+  align-items: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.login-card h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 26px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.login-group {
+  margin-bottom: 16px;
+}
+
+.login-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #334155;
+}
+
+.login-group input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.login-group input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.login-btn:hover {
+  background: #1d4ed8;
+}
+
+.login-btn:active {
+  transform: scale(0.98);
+}
+
+.login-message {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+  color: #dc2626;
+}
+
+.login-message.success {
+  color: #16a34a;
+}
+
+.Register-page { 
+  height: 65vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Register-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  padding: 12px;
+  border-radius: 12px;
+  align-items: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.Register-card h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 26px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.Register-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.Register-btn:hover {
+  background: #1d4ed8;
+}
+
+.Register-btn:active {
+  transform: scale(0.98);
+}
+
+/* =====================================================
+   ===================== DARK MODE =====================
+   ===================================================== */
+
+body.dark {
+  background: #020617;
+}
+
+/* Page background in dark mode */
+body.dark .login-page {
+  background: #020617;
+}
+
+/* CARD BACKGROUND CHANGE (KEY REQUIREMENT) */
+body.dark .login-card {
+  background: #0f172a; /* DARK CARD */
+  color: #e5e7eb;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Headings */
+body.dark .login-card h2 {
+  color: #f8fafc;
+}
+
+/* Labels */
+body.dark .login-group label {
+  color: #cbd5f5;
+}
+
+/* Inputs */
+body.dark .login-group input {
+  background: #020617;
+  border: 1px solid #334155;
+  color: #e5e7eb;
+}
+
+body.dark .login-group input::placeholder {
+  color: #94a3b8;
+}
+
+body.dark .login-group input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+}
+
+/* Button */
+body.dark .login-btn {
+  background: #3b82f6;
+}
+
+body.dark .login-btn:hover {
+  background: #2563eb;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 480px) {
+  .login-card {
+    width: 90%;
+    padding: 24px;
+  }
+}
