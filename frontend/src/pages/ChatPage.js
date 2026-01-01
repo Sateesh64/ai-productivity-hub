@@ -123,7 +123,6 @@ const ChatPage = () => {
         style={{
           width: "100%",
           maxWidth: "750px",
-          marginTop: "50px",
           background: "var(--card-bg, #ffffff)",
           padding: "32px",
           borderRadius: "16px",
